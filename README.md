@@ -53,12 +53,7 @@ pip install pandas matplotlib seaborn scikit-learn numpy
 
 ## Usage
 
-1. Install the required dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-2. Run the analysis:
+Run the analysis:
    - Open `main.ipynb` in Jupyter Notebook
 
 ## Results
