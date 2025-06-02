@@ -25,6 +25,52 @@ The dataset (`BC-Data-Set.csv`) contains various environmental measurements incl
 - Model performance comparison
 - Temporal analysis with both shuffled and non-shuffled data splits
 
+## Machine Learning Models
+
+We implemented and compared multiple regression algorithms using both **raw** and **log-transformed** features:
+
+### 1. **Support Vector Regression (SVR)**
+- Kernel: RBF
+- Tuned over `C`, `epsilon`, `gamma`, and `kernel`
+- Best R²: **0.789**, RMSE: **0.477** (with tuned parameters and FSS features)
+
+### 2. **Random Forest Regression**
+- Tuned over `n_estimators`, `max_depth`, `min_samples_split`, `min_samples_leaf`
+- Best R²: **0.690**, RMSE: **0.579**
+
+### 3. **Gradient Boosting Regression**
+- Tuned over `n_estimators`, `learning_rate`, `max_depth`, `min_samples_split`, `min_samples_leaf`
+- Best R²: **0.730**, RMSE: **0.540**
+
+### 4. **Feedforward Neural Network (FFNN)**
+- Initial architecture: `(64, 32)` with ReLU and Adam optimizer
+- Best performance: **R²: 0.796**, RMSE: **0.469**
+- Tuned variants explored architectures and learning rates; the original configuration surprisingly remained best
+
+---
+
+## Temporal Generalization
+
+- **Shuffled vs. Non-Shuffled Splits:** 
+  - Shuffled splits simulate i.i.d. training conditions
+  - Non-shuffled (time-aware) splits simulate forecasting future values
+- **Findings:** Performance drops in non-shuffled setup (e.g., FFNN drops from R² 0.796 to 0.739), highlighting the challenge of temporal generalization.
+
+---
+
+## Final Model Comparison
+
+| Model                       | Feature Selection | Tuned | R²     | RMSE   |
+|----------------------------|-------------------|-------|--------|--------|
+| SVR                        | FSS               | ✔️     | 0.789  | 0.477  |
+| Random Forest              | FSS               | ✔️     | 0.690  | 0.579  |
+| Gradient Boosting          | FSS               | ✔️     | 0.730  | 0.540  |
+| FFNN                       | FSS               | ❌     | 0.796  | 0.469  |
+| FFNN                       | FSS               | ✔️     | 0.783  | 0.484  |
+| FFNN                       | FSS               | Non-Shuffled | 0.739 | 0.571 |
+
+---
+
 ## Requirements
 
 ```bash
